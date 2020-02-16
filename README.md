@@ -42,3 +42,6 @@ Once Rhino started, drag the ```NUnitTestRunner.rhp``` file under ``NUnitTestRun
 
 4. Type in `NUnitTestRunnerCommand` to start debugging.
 
+
+### Thanks to:
+https://github.com/JoinCAD/RhinoNUnitTestRunner

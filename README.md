@@ -1,5 +1,6 @@
 # RhinoUnitTest
 Demo shows how do set up NUnit test for Rhino
+![Image of RhinoUnitTest Command](https://raw.githubusercontent.com/MingboPeng/RhinoUnitTest/master/RhinoUnitTest.gif)
 
 ## How to start
 This repo is setting up with following structure:
@@ -40,4 +41,4 @@ public override PlugInLoadTime LoadTime => PlugInLoadTime.AtStartup;
 Once Rhino started, drag the ```NUnitTestRunner.rhp``` file under ``NUnitTestRunner\bin`` folder to Rhino to load the NUnitTestRunner as plugin.
 
 4. Type in `NUnitTestRunnerCommand` to start debugging.
-![Image of RhinoUnitTest Command](https://raw.githubusercontent.com/MingboPeng/RhinoUnitTest/master/RhinoUnitTest.gif)
+

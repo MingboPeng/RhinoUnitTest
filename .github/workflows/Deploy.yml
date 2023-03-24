@@ -1,0 +1,33 @@
+---
+    name: Test
+    # This Workflow was written by CSykes
+    on:
+      pull_request:
+        types:
+          - closed
+
+    jobs:
+      BuildAndTest:
+        strategy:
+          matrix:
+            os: [ 'windows' ]
+        runs-on: ${{ matrix.os }}
+        
+        steps:
+              
+          - uses: actions/checkout@v3
+    
+          - name: Install dependencies
+            run: dotnet restore
+    
+          - name: Build
+            run: dotnet build --configuration Release --no-restore
+
+          - id: yak
+            uses: crashcloud/yak-publish@main
+            with:
+              package-name: 'NUnitTestRunner'
+              token: ${{ secrets.YAK_TOKEN }}
+              build-path: 'src/bin/x64/**/net48/'
+              test-run: false
+              platform: ${{ matrix.os }}

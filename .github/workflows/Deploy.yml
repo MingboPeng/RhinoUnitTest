@@ -24,7 +24,7 @@
             run: dotnet build --configuration Release --no-restore
 
           - id: yak
-            uses: crashcloud/yak-publish
+            uses: crashcloud/yak-publish@main
             with:
               package-name: 'NUnitTestRunner'
               token: ${{ secrets.YAK_TOKEN }}

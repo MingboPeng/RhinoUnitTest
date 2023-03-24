@@ -7,49 +7,25 @@ on:
 
 jobs:
   BuildAndTest:
-    runs-on: self-hosted
-    strategy:
-      matrix:
-        rhino-version: ["6", "7", "8 WIP"]
+    runs-on: windows-latest
     
     steps:
           
-      - name: Checkout Repo
-        id: checkout
-        uses: actions/checkout@v2
-        with:
-          token : ${{secrets.GIT_CREDENTIALS}}
+      - uses: actions/checkout@v3
 
-      - name: Install NUnitTestRunner
-        run: |
-          $yak = "C:\Program Files\Rhino ${{ matrix.dotnet-version }}\System\Yak.exe"
-          $pluginName = "NUnitTestRunner"
-          if ((& $yak list | Where-Object { $_.Contains("$pluginName") }).count -gt 0)
-          {
-            & $yak uninstall $pluginName
-          }
+      - name: Install dependencies
+        run: dotnet restore
 
-          & $yak install $pluginName
-        shell: powershell
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
 
-      - name: Run Integrated Tests
-        run: |
-          $dlls = (Get-ChildItem -Path tests/**/bin/x64/**/net48/*.dll)
-          if ($null -ne $dlls)
-          {
-            .\runner.ps1 $dlls
-            exit 0
-          }
-          else
-          {
-            Write-Host "No test dlls found!"
-          }
-          exit 1
-        shell: powershell
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
       
-      - name: Upload Tests
-        uses: actions/upload-artifact@v2
+      - name: use this action, test solution dir
+        uses: zyborg/dotnet-tests-report@v1
         with:
-          name: integration-results
-          path: |
-            tests/**/bin/x64/**/net48/*integrated_out.xml
+          project_path: tests/NUnitTestRunnerTests
+          report_name: Tests
+          report_title: Tests
+          github_token: ${{ secrets.GITHUB_TOKEN }}

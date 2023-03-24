@@ -1,0 +1,56 @@
+---
+name: Example
+# This Workflow was written by CSykes
+on:
+  pull_request:
+    branches:
+      - 'nonexistant/**'
+
+jobs:
+  BuildAndTest:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        rhino-version: ["6", "7", "8 WIP"]
+    
+    steps:
+          
+      - name: Checkout Repo
+        id: checkout
+        uses: actions/checkout@v3
+        with:
+          token : ${{secrets.GIT_CREDENTIALS}}
+
+      - name: Install NUnitTestRunner
+        run: |
+          $yak = "C:\Program Files\Rhino ${{ matrix.dotnet-version }}\System\Yak.exe"
+          $pluginName = "NUnitTestRunner"
+          if ((& $yak list | Where-Object { $_.Contains("$pluginName") }).count -gt 0)
+          {
+            & $yak uninstall $pluginName
+          }
+
+          & $yak install $pluginName
+        shell: powershell
+
+      - name: Run Integrated Tests
+        run: |
+          $dlls = (Get-ChildItem -Path tests/**/bin/x64/**/net48/*.dll)
+          if ($null -ne $dlls)
+          {
+            .\runner.ps1 $dlls
+            exit 0
+          }
+          else
+          {
+            Write-Host "No test dlls found!"
+          }
+          exit 1
+        shell: powershell
+      
+      - name: Upload Tests
+        uses: actions/upload-artifact@v2
+        with:
+          name: integration-results
+          path: |
+            tests/**/bin/x64/**/net48/*integrated_out.xml

@@ -21,3 +21,11 @@ jobs:
 
       - name: Test
         run: dotnet test --no-restore --verbosity normal
+      
+      - name: use this action, test solution dir
+        uses: zyborg/dotnet-tests-report@v1
+        with:
+          project_path: tests/NUnitTestRunnerTests
+          report_name: Tests
+          report_title: Tests
+          github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -50,7 +50,8 @@ namespace NUnitTestRunner.UI
 			var tests = testAssembly.GetExportedTypes()
 				.Select(type => type.GetMethods().Where(typ =>
 							Attribute.IsDefined(typ, typeof(NUnit.Framework.TestAttribute)) ||
-							Attribute.IsDefined(typ, typeof(NUnit.Framework.TestCaseAttribute))
+							Attribute.IsDefined(typ, typeof(NUnit.Framework.TestCaseAttribute)) ||
+							Attribute.IsDefined(typ, typeof(NUnit.Framework.IgnoreAttribute))
 					));
 
 			_testListBox = new ListBox();
@@ -71,9 +72,17 @@ namespace NUnitTestRunner.UI
 					_testListBox.Items.Add(new ListItem() { Text = typeName, Key = value.FullName, Tag = methods });
 					foreach (var method in methods)
 					{
-						var attr = method.Attributes;
+						string text = string.Empty;
+						if (method.GetCustomAttribute<NUnit.Framework.IgnoreAttribute>() is NUnit.Framework.IgnoreAttribute ignoreAttribute)
+						{
+							text = $"  ├── {method.Name} (Ignored)";
+						}
+						else
+						{
+							text = $"  ├── {method.Name}";
+						}
 
-						var testItem = new ListItem() { Text = "  ├── " + method.Name, Key = method.Name, Tag = method };
+						var testItem = new ListItem() { Text = text, Key = method.Name, Tag = method };
 						_testListBox.Items.Add(testItem);
 					}
 				}

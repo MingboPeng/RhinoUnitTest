@@ -10,7 +10,7 @@
       BuildAndTest:
         strategy:
           matrix:
-            os: [ 'windows' ]
+            os: [ 'windows-latest' ]
         runs-on: ${{ matrix.os }}
         
         steps:

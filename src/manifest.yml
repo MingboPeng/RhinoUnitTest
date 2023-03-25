@@ -4,5 +4,5 @@ version: 1.0.0
 authors:
 - csykes
 - (forked from) mingbo peng
-description: The NUnitTestRunner allows for running of test assemblies inside of Rhino from a command. Because if this, Rhino can be spun up, have tests run, results output, and rhino closed, perfect for a self-hosted CI/CD Machine.
+description: The NUnitTestRunner allows for running of test assemblies inside of Rhino from a command. Because of this, Rhino can be spun up, have tests run, results output, and rhino closed, perfect for a self-hosted CI/CD Machine.
 url: https://github.com/structurecraft.com/RhinoTestRunner

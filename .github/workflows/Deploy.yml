@@ -29,5 +29,5 @@
               package-name: 'NUnitTestRunner'
               token: ${{ secrets.YAK_TOKEN }}
               build-path: 'src/bin/x64/**/net48/'
-              test-run: false
+              publish: 'test'
               platform: ${{ matrix.os }}

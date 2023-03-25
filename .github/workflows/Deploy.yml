@@ -5,12 +5,14 @@
       pull_request:
         types:
           - closed
+        paths:
+          - "src/manifest.yml"
 
     jobs:
       BuildAndTest:
         strategy:
           matrix:
-            os: [ 'windows' ]
+            os: [ 'windows', 'mac' ]
         runs-on: ${{ matrix.os }}
         
         steps:
@@ -28,6 +30,6 @@
             with:
               package-name: 'NUnitTestRunner'
               token: ${{ secrets.YAK_TOKEN }}
-              build-path: 'src/bin/x64/**/net48/'
-              test-run: false
+              build-path: 'src/bin/**/**/net48/'
+              publish: 'production'
               platform: ${{ matrix.os }}

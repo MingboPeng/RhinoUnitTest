@@ -12,7 +12,7 @@
       BuildAndTest:
         strategy:
           matrix:
-            os: [ 'windows', 'mac' ]
+            os: [ 'windows-latest', 'macos-latest' ]
         runs-on: ${{ matrix.os }}
         
         steps:

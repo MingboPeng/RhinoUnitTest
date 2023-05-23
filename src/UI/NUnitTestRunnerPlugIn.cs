@@ -14,5 +14,4 @@ public class NUnitTestRunnerPlugIn : Rhino.PlugIns.PlugIn
 
 	///<summary>Gets the only instance of the NUnitTestRunnerPlugIn plug-in.</summary>
 	public static NUnitTestRunnerPlugIn Instance { get; private set; }
-
 }

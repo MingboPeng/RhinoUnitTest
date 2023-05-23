@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <AssemblyName>NUnitTestRunner</AssemblyName>
+    <AssemblyName>TestRunner</AssemblyName>
     <RootNamespace>NUnitTestRunner</RootNamespace>
     <Platforms>x64</Platforms>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
@@ -13,13 +13,13 @@
     <!-- https://stackoverflow.com/questions/46352600/how-do-i-automatically-set-all-projects-in-my-solution-to-the-same-version#46355164 -->
     <Company>StructureCraft</Company>
     <Authors>CSykes</Authors>
-    <PackageId>NUnitTestRunner</PackageId>
-    <AssemblyTitle>NUnitTestRunner</AssemblyTitle>
+    <PackageId>RhinoTestRunner</PackageId>
+    <AssemblyTitle>TestRunner</AssemblyTitle>
     <RepositoryType>GitHub</RepositoryType>
     <PackageProjectUrl>https://github.com/structurecraft/NUnitTestRunner</PackageProjectUrl>
     <RepositoryUrl>https://github.com/structurecraft/NUnitTestRunner/</RepositoryUrl>
-    <PackageTags>NUnitTestRunner</PackageTags>
-    <Description>The NUnitTestRunner</Description>
+    <PackageTags>TestRunner</PackageTags>
+    <Description>The TestRunner</Description>
     <Copyright>StructureCraft 2023</Copyright>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
@@ -36,6 +36,13 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.13.3" />
@@ -65,6 +72,11 @@
 
   <PropertyGroup>
     <FallbackCulture>en-US</FallbackCulture>
+    <Title>NUnitTestRunner</Title>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>$(Assembly Version)</FileVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>

@@ -77,8 +77,9 @@ namespace NUnitTestRunner.Commands
 					Args = ArgHandler.Parse(_input);
 					Args.Doc = doc;
 				}
-
 			}
+
+			Args.Mode = mode;
 
 			// Tests etc are only run AFTER idle has been hit to ensure Rhino has initialized.
 			RhinoApp.Idle += RhinoApp_Idle;
@@ -107,10 +108,7 @@ namespace NUnitTestRunner.Commands
 				{
 					Environment.FailFast("Finished!");
 				}
-
 			}
 		}
-
 	}
-
 }

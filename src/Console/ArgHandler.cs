@@ -54,15 +54,13 @@
 				}
 				else if (s_argArgSwitch.TryGetValue(lowerArg, out Action<NUnitTestRunnerArgs, string> argArgAction))
 				{
-					int argIndex = index + 1;
-					if (argIndex > arguments.Length)
-					{
-						throw new ArgumentException($"Missing Argument for {lowerArg}");
-					}
+					string dll = arguments[index + 1];
+					string classAndMethod = arguments[index + 2];
 
-					string argValue = arguments[argIndex];
-					argArgAction(testArgs, argValue);
-					i += 1;
+					testArgs.Dlls = new string[] { dll };
+
+					argArgAction(testArgs, classAndMethod);
+					i += 2;
 				}
 				else if (lowerArg.EndsWith(".dll") ||
 					lowerArg.EndsWith(".rhp") ||
@@ -74,7 +72,6 @@
 				{
 					throw new ArgumentException($"Invalid Argument {lowerArg}");
 				}
-
 			}
 
 			return testArgs;
@@ -102,7 +99,5 @@
 		{
 			testArgs.ClassAndMethod = argument;
 		}
-
 	}
-
 }

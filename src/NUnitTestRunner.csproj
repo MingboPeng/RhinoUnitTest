@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFrameworks>net48;net7.0</TargetFrameworks>
     <AssemblyName>TestRunner</AssemblyName>
     <RootNamespace>NUnitTestRunner</RootNamespace>
-    <Platforms>x64</Platforms>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<TargetExt>.rhp</TargetExt>
+		<Version>1.2.0</Version>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -25,14 +25,15 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>11</LangVersion>
     <Nullable>annotations</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <RuntimeIdentifiers>win-x64;win10-arm;win10-arm-aot;win10-arm64-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
-  </PropertyGroup>
-
+	<PropertyGroup>
+		<RhinoMacLauncher Condition="'$(TargetFramework)' == 'net48'">7</RhinoMacLauncher>
+		<RhinoMacLauncher Condition="'$(TargetFramework)' == 'net7.0'">8</RhinoMacLauncher>
+	</PropertyGroup>
+	
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
@@ -46,7 +47,8 @@
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="RhinoCommon" Version="7.27.23032.13001" />
+		<PackageReference Include="RhinoCommon" Version="7.21.22208.13001" IncludeAssets="compile;build" Condition="'$(TargetFramework)' == 'net48'" />
+		<PackageReference Include="RhinoCommon" Version="8.0.23094.11475-wip" IncludeAssets="compile;build" Condition="'$(TargetFramework)' == 'net7.0'" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,7 +76,7 @@
     <FallbackCulture>en-US</FallbackCulture>
     <Title>NUnitTestRunner</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.2.0</AssemblyVersion>
     <FileVersion>$(Assembly Version)</FileVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

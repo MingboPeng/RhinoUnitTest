@@ -1,24 +1,40 @@
-﻿// NUnit 3 tests
-// See documentation : https://github.com/nunit/docs/wiki/NUnit-Documentation
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using NUnit.Framework;
-using Rhino.DocObjects;
+using Rhino;
+using Rhino.Geometry;
 
 namespace RhinoPlugin.Test
 {
     [TestFixture]
-    public class TestClass
+    public class TestClass: Rhino.Testing.Fixtures.RhinoTestFixture
     {
         [Test]
-        public void TestMethod()
+        public void TestMethod_Rhino()
         {
-            var doc = Rhino.RhinoDoc.ActiveDoc;
+            var doc = RhinoDoc.Create(null);
+            var guid = Guid.Empty;
+            var bbox = new BoundingBox(new Point3d(0, 0, 0), new Point3d(5, 5, 5));
+            var brep = bbox.ToBrep();
+            brep.SetUserString("myData", "myValue");
+            guid = doc.Objects.AddBrep(brep);
+
+            var rhinoObj = doc.Objects.FindId(guid);
+            var data = rhinoObj.Geometry.GetUserString("myData");
+     
+            Assert.AreEqual(data, "myValue");
+
+        }
+
+        [Test]
+        public void TestMethod_MyPlugin()
+        {
+            var doc = RhinoDoc.Create(null);
             var guid = RhinoPluginCommand.Instance.MakeBrep(doc);
             var rhinoObj = doc.Objects.FindId(guid);
             var data = rhinoObj.Geometry.GetUserString("myData");
 
             Assert.AreEqual(data, "myValue");
+
         }
     }
 }

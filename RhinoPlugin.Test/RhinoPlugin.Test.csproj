@@ -1,25 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net48;</TargetFrameworks>
+		<TargetFrameworks>net48;net7.0-windows;</TargetFrameworks>
 		<IsPackable>false</IsPackable>
 		<RhinoSystemDirectory>C:\Program Files\Rhino 8\System</RhinoSystemDirectory>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-		<PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-		<PackageReference Include="NUnit" Version="3.14.0" />
-		<PackageReference Include="Rhino.Testing" Version="8.0.9-beta" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.*" />
+		<PackageReference Include="NUnit" Version="4.1.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.*" />
+		<!-- <PackageReference Include="Rhino.Testing" Version="8.0.9-beta" /> -->
+	</ItemGroup>
+
+
+
+	<ItemGroup Condition=" $(TargetFramework.Contains('net7.0')) == 'true'">
+		<Reference Include="$(RhinoSystemDirectory)\netcore\RhinoCommon.dll" Private="False" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" $(TargetFramework.Contains('net48')) == 'true'">
 		<Reference Include="$(RhinoSystemDirectory)\RhinoCommon.dll" Private="False" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
+		<ProjectReference Include="..\Rhino.Testing\src\Rhino.Testing.csproj" />
 		<ProjectReference Include="..\RhinoPlugin\RhinoPlugin.csproj" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 		<None Update="Rhino.Testing.Configs.xml" CopyToOutputDirectory="always" />
 	</ItemGroup>

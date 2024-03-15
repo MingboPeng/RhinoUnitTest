@@ -36,6 +36,12 @@ namespace RhinoPlugin
             return Result.Success;
         }
 
+        public void ExecuteCommand(RhinoDoc doc)
+        {
+            var d = RhinoDoc.ActiveDoc;
+            RunCommand(d, RunMode.Scripted);
+        }
+
         public Guid MakeBrep(RhinoDoc doc)
         {
             var guid = Guid.Empty;

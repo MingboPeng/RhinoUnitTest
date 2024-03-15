@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using NUnit.Framework;
-using Rhino.DocObjects;
 
 namespace RhinoPlugin.Test
 {
@@ -21,9 +18,6 @@ namespace RhinoPlugin.Test
         public override void OneTimeTearDown()
         {
             base.OneTimeTearDown();
-
-            // remove plugins
-            //ClearPlugins();
         }
 
         private static IEnumerable<string> GetPlugins()
@@ -55,14 +49,16 @@ namespace RhinoPlugin.Test
 
             if (res == Rhino.PlugIns.LoadPlugInResult.ErrorUnknown)
                 throw new System.ArgumentException($"Failed to load {rhp}");
-            else if (res == Rhino.PlugIns.LoadPlugInResult.Success)
+
+            TestContext.WriteLine($"{rhp} is loaded");
+            var plugin = RhinoPlugin.Instance;
+            if (plugin == null)
             {
-                TestContext.WriteLine($"{rhp} is loaded");
+                var p = Rhino.Runtime.HostUtils.CreatePlugIn(typeof(RhinoPlugin), true);
+                plugin = p as RhinoPlugin;
+                Rhino.Runtime.HostUtils.CreateCommands(plugin);
             }
-            else if (res == Rhino.PlugIns.LoadPlugInResult.SuccessAlreadyLoaded)
-            {
-                //Do nothing
-            }
+
         }
     }
 }
